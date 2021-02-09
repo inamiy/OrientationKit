@@ -3,22 +3,24 @@ import OrientationKit
 
 struct ContentView: View
 {
-    @StateObject
-    private var manager: OrientationManager = .init()
+    /// - Note: Call `.withOrientations()` at root view to extract orientations via `@Environment`.
+    @Environment(\.deviceOrientation)
+    private var deviceOrientation
 
     @Environment(\.interfaceOrientation)
     private var interfaceOrientation
 
+    /// - Note: To grab other `OrientationManager`'s properties e.g. `deviceMotion`, just access via `EnvironmentObject`.
+    @EnvironmentObject
+    private var manager: OrientationManager
+
     var body: some View
     {
-        let deviceOrientation = manager.deviceOrientation
-        let deviceToInterfaceOrientation = deviceOrientation.interfaceOrientation
-
         return VStack(spacing: 20) {
             VStack(spacing: 10) {
                 hStack(
-                    key: "CoreMotion deviceOrientation",
-                    value: "\(deviceOrientation.debugDescription)"
+                    key: "@Environment deviceOrientation",
+                    value: "\(self.deviceOrientation.debugDescription)"
                 )
                 Divider()
                 hStack(
@@ -30,13 +32,8 @@ struct ContentView: View
 
             VStack(spacing: 10) {
                 hStack(
-                    key: "CoreMotion interfaceOrientation",
-                    value: "\(deviceToInterfaceOrientation.debugDescription)"
-                )
-                Divider()
-                hStack(
-                    key: "Env interfaceOrientation",
-                    value: "\(interfaceOrientation().debugDescription)"
+                    key: "@Environment interfaceOrientation",
+                    value: "\(self.interfaceOrientation.debugDescription)"
                 )
                 Divider()
                 hStack(
@@ -49,9 +46,6 @@ struct ContentView: View
             accelerometerText()
         }
         .frame(maxWidth: 500)
-        .onAppear {
-            manager.start(interval: 0.03, queue: .main)
-        }
     }
 
     private func hStack(key: String, value: String) -> some View
