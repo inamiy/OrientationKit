@@ -16,7 +16,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
             let window = UIWindow(windowScene: windowScene)
 
             let hostingVC = HostingController(
-                rootView: ContentView()
+                // NOTE:
+                // `withOrientations()` provides
+                // @Environment(\.deviceOrientation) and @Environment(\.interfaceOrientation).
+                rootView: ContentView().withOrientations()
             )
             window.rootViewController = hostingVC
 

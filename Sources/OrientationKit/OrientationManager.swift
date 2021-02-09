@@ -15,14 +15,10 @@ public final class OrientationManager: ObservableObject
 
     private var coreMotionManager: CMMotionManager?
 
-    private let strategy: Strategy
-
-    public init(strategy: Strategy = .systemLike)
-    {
-        self.strategy = strategy
-    }
+    public init() {}
 
     public func start(
+        strategy: Strategy = .systemLike,
         interval: TimeInterval,
         queue: OperationQueue = .current ?? .main
     )
@@ -41,7 +37,7 @@ public final class OrientationManager: ObservableObject
 
             self.deviceMotion = data
 
-            let deviceOrientation = self.strategy.calculate(data.gravity)
+            let deviceOrientation = strategy.calculate(data.gravity)
 
             if let deviceOrientation = deviceOrientation {
                 self.deviceOrientation = deviceOrientation
