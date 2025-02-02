@@ -5,6 +5,7 @@ import Combine
 import CoreMotion
 
 /// `CMDeviceMotion` wrapper to comform `ObservableObject`.
+@MainActor
 public final class OrientationManager: ObservableObject
 {
     @Published
@@ -63,12 +64,12 @@ public final class OrientationManager: ObservableObject
 extension OrientationManager
 {
     /// `UIDeviceOrientation` estimation strategy.
-    public struct Strategy
+    public struct Strategy: Sendable
     {
         /// - Note: Returning `nil` means "no update".
-        fileprivate let calculate: (_ gravity: CMAcceleration) -> UIDeviceOrientation?
+        fileprivate let calculate: @Sendable (_ gravity: CMAcceleration) -> UIDeviceOrientation?
 
-        public init(calculate: @escaping (_ gravity: CMAcceleration) -> UIDeviceOrientation?)
+        public init(calculate: @escaping @Sendable (_ gravity: CMAcceleration) -> UIDeviceOrientation?)
         {
             self.calculate = calculate
         }

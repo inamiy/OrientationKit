@@ -37,7 +37,7 @@ extension CGImagePropertyOrientation
 
 // MARK: - AVCaptureVideoOrientation
 
-extension AVCaptureVideoOrientation: CustomDebugStringConvertible
+extension AVCaptureVideoOrientation: @retroactive CustomDebugStringConvertible
 {
     public var debugDescription: String
     {
@@ -96,7 +96,7 @@ extension AVCaptureVideoOrientation: CustomDebugStringConvertible
 
 // MARK: - UIDeviceOrientation
 
-extension UIDeviceOrientation: CustomDebugStringConvertible
+extension UIDeviceOrientation: @retroactive CustomDebugStringConvertible
 {
     public var debugDescription: String
     {
@@ -155,7 +155,7 @@ extension UIDeviceOrientation: CustomDebugStringConvertible
 
 // MARK: - UIInterfaceOrientation
 
-extension UIInterfaceOrientation: CustomDebugStringConvertible
+extension UIInterfaceOrientation: @retroactive CustomDebugStringConvertible
 {
     public var debugDescription: String
     {
